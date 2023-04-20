@@ -1,9 +1,7 @@
-import Card from './components/Card'
+import Tile from './components/Tile'
 
 export default function App() {
     return <div>
-        <Card />
-        <Card />
-        <Card />
+        <Tile />
     </div>
 }

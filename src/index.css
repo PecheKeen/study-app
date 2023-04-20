@@ -1,6 +1,49 @@
+* {
+  margin: 0;
+}
+
+html {
+  height: 100%;
+}
+
 body {
-  background-color: #222;
-  color: #ddd;
+  background-color: #ddd;
+  color: #222;
+  margin: 0;
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-container {
+  /* outline: 5px solid red; */
+  display: grid;
+  width: 385px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.tile {
+display: flex;
+border: .02rem solid #222;
+background-color: #ddd;
+width: 125px;
+height: 75px;
+
+/* gap: .25rem; */
+}
+
+.tile-rank {
+  background-color: lightblue;
+  width: 2rem;
+  min-height: 2rem;
+  margin: 0 0 0 1rem;
+}
+
+.tile-title {
+  margin: .25rem;
+  font-size: 1.2rem;
 }
 
 
