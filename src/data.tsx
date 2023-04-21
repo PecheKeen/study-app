@@ -1,10 +1,27 @@
-const data = [
+export const data = [
     {
         id: 1,
-        title: "Linked Lists",
+        title: "Linked List - Insert",
         dateAdded: "3-19-2023 22:11",
         nextReview: "3-20-2023 22:11",
-        desciption: "",
+        innerCards: [
+            {
+                subtitle: "",
+                body: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni quibusdam voluptates labore vel nulla laudantium odio, blanditiis a dolorum ipsam."
+            },
+            {
+                subtitle: "Overall Strategy",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt harum facere eos, ipsam provident, voluptatum mollitia laborum in aliquid, eligendi veritatis? Voluptas, expedita laudantium! Perspiciatis!",
+            },
+            {
+                subtitle: "Pseudo Code",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex qui corrupti nam quaerat, quos quam. Reiciendis provident veniam in, inventore libero perspiciatis nulla quibusdam deserunt iusto temporibus recusandae rerum itaque dicta nesciunt aut facere officiis. Consequuntur, iste quas inventore blanditiis dolores magnam, architecto porro aliquid provident voluptates quasi vitae tempora."
+            },
+            {
+                subtitle: "Solution",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium eligendi quod corporis est quaerat fuga inventore voluptas dicta eum, consequatur quae maxime minima saepe!"
+            }
+        ],
         stats: {
             reviewCount: 0,
             bucket: 0,
@@ -12,10 +29,27 @@ const data = [
     },
     {
         id: 2,
-        title: "Pascal's Triangle",
-        dateAdded: "3-19-2023 22:12",
-        nextReview: "3-20-2023 22:00",
-        desciption: "",
+        title: "Dijkstra's Algorithm",
+        dateAdded: "3-19-2023 22:11",
+        nextReview: "3-20-2023 22:11",
+        innerCards: [
+            {
+                subtitle: "",
+                body: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni quibusdam voluptates labore vel nulla laudantium odio, blanditiis a dolorum ipsam."
+            },
+            {
+                subtitle: "Overall Strategy",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt harum facere eos, ipsam provident, voluptatum mollitia laborum in aliquid, eligendi veritatis? Voluptas, expedita laudantium! Perspiciatis!",
+            },
+            {
+                subtitle: "Pseudo Code",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex qui corrupti nam quaerat, quos quam. Reiciendis provident veniam in, inventore libero perspiciatis nulla quibusdam deserunt iusto temporibus recusandae rerum itaque dicta nesciunt aut facere officiis. Consequuntur, iste quas inventore blanditiis dolores magnam, architecto porro aliquid provident voluptates quasi vitae tempora."
+            },
+            {
+                subtitle: "Solution",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium eligendi quod corporis est quaerat fuga inventore voluptas dicta eum, consequatur quae maxime minima saepe!"
+            }
+        ],
         stats: {
             reviewCount: 0,
             bucket: 0,
@@ -24,42 +58,26 @@ const data = [
     {
         id: 3,
         title: "Bubble Sort",
-        dateAdded: "3-19-2023 22:13",
-        nextReview: "3-20-2023 22:00",
-        desciption: "",
-        stats: {
-            reviewCount: 0,
-            bucket: 0,
-        }
-    },
-    {
-        id: 4,
-        title: "Quick Sort",
-        dateAdded: "4-10-2023 22:11",
-        nextReview: "4-12-2023 22:00",
-        desciption: "",
-        stats: {
-            reviewCount: 0,
-            bucket: 0,
-        }
-    },
-    {
-        id: 5,
-        title: "Two Sum",
-        dateAdded: "4-19-2023 22:11",
-        nextReview: "6-20-2023 22:00",
-        desciption: "",
-        stats: {
-            reviewCount: 0,
-            bucket: 0,
-        }
-    },
-    {
-        id: 6,
-        title: "Fibonacci",
-        dateAdded: "4-19-2023 22:11",
-        nextReview: "4-19-2023 22:15",
-        desciption: "",
+        dateAdded: "3-19-2023 22:11",
+        nextReview: "3-20-2023 22:11",
+        innerCards: [
+            {
+                subtitle: "",
+                body: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni quibusdam voluptates labore vel nulla laudantium odio, blanditiis a dolorum ipsam."
+            },
+            {
+                subtitle: "Overall Strategy",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt harum facere eos, ipsam provident, voluptatum mollitia laborum in aliquid, eligendi veritatis? Voluptas, expedita laudantium! Perspiciatis!",
+            },
+            {
+                subtitle: "Pseudo Code",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex qui corrupti nam quaerat, quos quam. Reiciendis provident veniam in, inventore libero perspiciatis nulla quibusdam deserunt iusto temporibus recusandae rerum itaque dicta nesciunt aut facere officiis. Consequuntur, iste quas inventore blanditiis dolores magnam, architecto porro aliquid provident voluptates quasi vitae tempora."
+            },
+            {
+                subtitle: "Solution",
+                body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae accusantium eligendi quod corporis est quaerat fuga inventore voluptas dicta eum, consequatur quae maxime minima saepe!"
+            }
+        ],
         stats: {
             reviewCount: 0,
             bucket: 0,

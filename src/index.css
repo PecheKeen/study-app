@@ -9,7 +9,6 @@ html {
 body {
   background-color: #eee;
   color: #222;
-  margin: 0;
   display: flex;
   min-height: 100%;
   align-items: center;
@@ -46,11 +45,11 @@ body {
 }
 
 .card-subtitle {
-  margin: 1rem 0 0 1rem;
+  margin: 2rem 3rem 1rem;
 }
 
 .card-body {
-  margin: 1rem;
+  margin: 0 3rem;
 }
 
 .line {
@@ -72,7 +71,7 @@ body {
 
 .tile {
   background-color: #ddd;
-display: flex;
+  display: flex;
 }
 
 .tile-rank {
@@ -83,12 +82,37 @@ display: flex;
 }
 
 .tile-title {
-  margin: .25rem;
-  font-size: .8rem;
+  margin: .5rem;
+  font-size: 1rem;
 }
 
 .list-container {
-  background-color: #ddd;
-  height: 375px;
   margin-top: 1rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background-color: #ddd;
+  height: 400px;
+  overflow: scroll;
+}
+
+.list-item {
+  display: flex;
+  background-color: #ccc;
+  align-items: center;
+}
+
+.list-item-title {
+  margin-left: 1rem;
+  font-size: .9rem;
+}
+
+.list-item-status {
+  margin-left: auto;
+  height: 25px;
+  width: 10px;
+  background-color: green;
 }

@@ -2,7 +2,7 @@ export default function Card() {
     return (
         <div className="card-container">
             <div className="card-sides">
-                <h2 className="card-title">Linked List</h2>
+                <h2 className="card-title">Linked List - Insert</h2>
                 <div className="card-face">
                     <h4 className="card-subtitle">Overall Strategy</h4>
                     <p className="card-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus amet nihil eum, dolore cupiditate quasi cumque possimus totam excepturi labore ducimus asperiores mollitia velit placeat.</p>
