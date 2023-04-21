@@ -5,7 +5,7 @@ import List from './components/List'
 import { data } from './data'
 import { nanoid } from 'nanoid';
 
-type tCard = {
+export type tCard = {
     id: string,
     title: string,
     dateAdded: number,
@@ -48,18 +48,28 @@ export default function App() {
     return <div className="main">
         <Card />
         <div className="sidebar">
-            <NewCardButton />
+            <NewCardButton createNewCard={createNewCard} />
             <Tile />
             <List cards={cards}/>
         </div>
     </div>
 }
 
-function NewCardButton() {
+function NewCardButton(props: any) {
+    const [title, setTitle] = React.useState<string>("")
+
+    function handleSubmit(event: any) {
+        event.preventDefault()
+        if (title) {
+            props.createNewCard(title);
+            setTitle("")
+        }
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <label>
-                <input type="text" name="newCard"/>
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             </label>
             <input type="submit" value="+"/>
         </form>
