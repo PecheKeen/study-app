@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  background-color: #ddd;
+  background-color: #eee;
   color: #222;
   margin: 0;
   display: flex;
@@ -16,34 +16,79 @@ body {
   justify-content: center;
 }
 
+.main {
+  display: flex;
+  gap: 2rem;
+  margin-top: 5vh;
+}
+
+.card-container {
+  background-color: #ddd;
+  width: 600px;
+  height: 100%;
+  align-items: center;
+  overflow: scroll;
+}
+.card-sides {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  margin: 2rem 0 0 6rem;
+}
+
+.card-face {
+  background-color: #eee;
+  margin: 1rem 5rem 1rem 6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-subtitle {
+  margin: 1rem 0 0 1rem;
+}
+
+.card-body {
+  margin: 1rem;
+}
+
+.line {
+  width: 150px;
+  height: 1px;
+  background-color: #222;
+  margin: 1.5rem 0 1.5rem 33%;
+}
+
+.sidebar {
+  width: 350px;
+}
+
 .tile-container {
-  /* outline: 5px solid red; */
   display: grid;
-  width: 385px;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 5px;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
 }
 
 .tile {
+  background-color: #ddd;
 display: flex;
-border: .02rem solid #222;
-background-color: #ddd;
-width: 125px;
-height: 75px;
-
-/* gap: .25rem; */
 }
 
 .tile-rank {
   background-color: lightblue;
-  width: 2rem;
-  min-height: 2rem;
-  margin: 0 0 0 1rem;
+  width: .5rem;
+  min-height: 4rem;
+  margin-left: auto;
 }
 
 .tile-title {
   margin: .25rem;
-  font-size: 1.2rem;
+  font-size: .8rem;
 }
 
-
+.list-container {
+  background-color: #ddd;
+  height: 375px;
+  margin-top: 1rem;
+}
