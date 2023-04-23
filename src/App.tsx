@@ -10,11 +10,16 @@ export type tCard = {
     title: string,
     dateAdded: number,
     nextReview: number,
-    innerCards: [],
+    cardFace: cardFace[],
     stats: {
         reviewCount: number,
         bucket: number,
     }
+}
+
+type cardFace = {
+    subtitle: string,
+    body: string,
 }
 
 export default function App() {
@@ -29,7 +34,7 @@ export default function App() {
             title: title,
             dateAdded: Date.now(),
             nextReview: Date.now(),
-            innerCards: [],
+            cardFace: [{subtitle: "New Card", body: "Write your content here!"}],
             stats: {
                 reviewCount: 0,
                 bucket: 0,
@@ -45,12 +50,18 @@ export default function App() {
         }) || cards[0]
     }
 
+    function updateCard(title?: string, subtitle?: string,  ) {
+
+    }
+
     return <div className="main">
-        <Card />
+        <Card
+            currentCard={findCurrentCard()}
+        />
         <div className="sidebar">
             <NewCardButton createNewCard={createNewCard} />
             <Tile />
-            <List cards={cards}/>
+            <List cards={cards} setCurrentCardId={setCurrentCardId} />
         </div>
     </div>
 }
@@ -67,7 +78,7 @@ function NewCardButton(props: any) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="new-card-form" onSubmit={handleSubmit}>
             <label>
                 <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             </label>
