@@ -1,6 +1,6 @@
 import React from 'react'
 // import Card from './components/Card'
-import Tile from './components/Tile'
+// import Tile from './components/Tile'
 // import List from './components/List'
 import { data } from './data'
 import { nanoid } from 'nanoid';
@@ -27,9 +27,8 @@ export type cardFace = {
 
 export default function App() {
     const [cards, setCards] = React.useState<tCard[]>([...data]);
-    const [currentCardId, setCurrentCardId] = React.useState(
-        (cards[0] && cards[0].id) || ""
-    )
+    const [currentCardId, setCurrentCardId] = React.useState((cards[0] && cards[0].id) || "");
+    const [editorMode, setEditorMode] = React.useState<boolean>(true);
 
     function createNewCard(title: string) {
         const newCard: tCard = {
@@ -54,6 +53,19 @@ export default function App() {
         }) || cards[0]
     }
 
+    function updateCard(property: string, value: any) {
+        setCards(prevCards => prevCards.map((card) => {
+            if (card.id === currentCardId) {
+                return {
+                    ...card,
+                    [property]: value
+                }
+            } else {
+                return card
+            }
+        }))
+    }
+
     function updateCardFace(property: string, value: any, id: string) {
         setCards(prevCards => prevCards.map((card) => {
             if (card.id === currentCardId) {
@@ -74,13 +86,45 @@ export default function App() {
     }
 
     return <div className="main">
-        <CardViewer currentCard={findCurrentCard()} updateCardFace={updateCardFace} />
+        <CardViewer card={findCurrentCard()} updateCardFace={updateCardFace} />
+        {editorMode ? <CardEditor card={findCurrentCard()} updateCard={updateCard} />
+                    : <Sidebar cards={cards} createNewCard={createNewCard} setCurrentCardId={setCurrentCardId} />}
+    </div>
+}
+
+//Card Editor
+function CardEditor({card, updateCard}:any) {
+    return (
+        <div className="card-editor-container">
+            <form className='card-editor-form'>
+                <label htmlFor="card-title">Title: </label>
+                <input
+                    className='card-editor-title'
+                    type="text"
+                    id='card-title'
+                    name='card-title' value={card.title}
+                    onChange={(e) => updateCard("title", e.target.value)} />
+                <label htmlFor="card-body">Body: </label>
+                <textarea
+                    className='card-editor-body'
+                    id='card-body'
+                    name='card-body'
+                    value={card.body}
+                    onChange={(e) => updateCard("body", e.target.value)} />
+            </form>
+        </div>
+    )
+}
+
+//Sidebar
+function Sidebar({ cards, createNewCard, setCurrentCardId}:any) {
+    return (
         <div className="sidebar">
             <NewCardButton createNewCard={createNewCard} />
             <Tile />
             <List cards={cards} setCurrentCardId={setCurrentCardId} />
         </div>
-    </div>
+    )
 }
 
 //New Card Button
@@ -97,11 +141,45 @@ function NewCardButton(props: any) {
 
     return (
         <form className="new-card-form" onSubmit={handleSubmit}>
-            <label>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-            </label>
+            <label>Title: </label>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             <input type="submit" value="+"/>
         </form>
+    )
+}
+
+//Recommendation Tiles
+function Tile() {
+    return (
+        <div className="tiles">
+            <h3>Suggested Items</h3>
+            <div className="tile-container">
+                <div className="tile">
+                    <h4 className="tile-title">Linked List - Insert</h4>
+                    <div className="tile-rank"></div>
+                </div>
+                <div className="tile">
+                    <h4 className="tile-title">Dijkstra's Algorithm</h4>
+                    <div className="tile-rank"></div>
+                </div>
+                <div className="tile">
+                    <h4 className="tile-title">Two Sum</h4>
+                    <div className="tile-rank"></div>
+                </div>
+                <div className="tile">
+                    <h4 className="tile-title">Bubble Sort</h4>
+                    <div className="tile-rank"></div>
+                </div>
+                <div className="tile">
+                    <h4 className="tile-title">Queue</h4>
+                    <div className="tile-rank"></div>
+                </div>
+                <div className="tile">
+                    <h4 className="tile-title"></h4>
+                    <div className="tile-rank"></div>
+                </div>
+            </div>
+        </div>
     )
 }
 
@@ -126,7 +204,7 @@ function List(props: any) {
 
 //Card Viewer
 function CardViewer(props: any) {
-    const cardElements = props.currentCard.cardFace.map((cardFace: cardFace) => {
+    const cardElements = props.card.cardFace.map((cardFace: cardFace) => {
         return (
             <div key={cardFace.id} className="cardface" onClick={() => props.updateCardFace('isHidden', !cardFace.isHidden, cardFace.id)}>
                 <h4 className="cardface-subtitle">{cardFace.subtitle}</h4>
@@ -139,8 +217,8 @@ function CardViewer(props: any) {
     return (
         <div className="card-container">
             <div className="card-sides">
-                <h2 className="card-title">{props.currentCard && props.currentCard.title || "New Card"}</h2>
-                <p className="card-body">{props.currentCard && props.currentCard.body}</p>
+                <h2 className="card-title">{props.card && props.card.title || "New Card"}</h2>
+                <p className="card-body">{props.card && props.card.body}</p>
                 {cardElements}
             </div>
         </div>

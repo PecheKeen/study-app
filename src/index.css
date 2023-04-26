@@ -15,10 +15,27 @@ body {
   justify-content: center;
 }
 
+textarea {
+  resize: vertical;
+}
+
 .main {
   display: flex;
   gap: 2rem;
   margin-top: 5vh;
+}
+
+.card-editor-container {
+  width: 350px;
+}
+
+.card-editor-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-editor-body {
+  height: 100px;
 }
 
 .card-container {
