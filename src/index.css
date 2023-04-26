@@ -37,18 +37,23 @@ body {
   margin: 2rem 0 0 6rem;
 }
 
-.card-face {
+.card-body {
+  margin: 1rem 7rem;
+}
+
+.cardface {
   background-color: #eee;
   margin: 1rem 5rem 1rem 6rem;
   display: flex;
   flex-direction: column;
 }
 
-.card-subtitle {
+.cardface-subtitle {
   margin: 2rem 3rem 1rem;
+  text-align: center;
 }
 
-.card-body {
+.cardface-body {
   margin: 0 3rem;
 }
 

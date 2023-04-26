@@ -8,6 +8,7 @@ import { nanoid } from 'nanoid';
 export type tCard = {
     id: string,
     title: string,
+    body: string,
     dateAdded: number,
     nextReview: number,
     cardFace: cardFace[],
@@ -34,6 +35,7 @@ export default function App() {
         const newCard: tCard = {
             id: nanoid(),
             title: title,
+            body: "",
             dateAdded: Date.now(),
             nextReview: Date.now(),
             cardFace: [{id: nanoid(), isHidden: false, subtitle: "New Card", body: "Write your content here!"}],
@@ -126,9 +128,9 @@ function List(props: any) {
 function CardViewer(props: any) {
     const cardElements = props.currentCard.cardFace.map((cardFace: cardFace) => {
         return (
-            <div key={cardFace.id} className="card-face" onClick={() => props.updateCardFace('isHidden', !cardFace.isHidden, cardFace.id)}>
-                <h4 className="card-subtitle">{cardFace.subtitle}</h4>
-                <p className="card-body">{cardFace.isHidden && cardFace.body}</p>
+            <div key={cardFace.id} className="cardface" onClick={() => props.updateCardFace('isHidden', !cardFace.isHidden, cardFace.id)}>
+                <h4 className="cardface-subtitle">{cardFace.subtitle}</h4>
+                <p className="cardface-body">{!cardFace.isHidden && cardFace.body}</p>
                 <div className="line"></div>
             </div>
         )
@@ -138,6 +140,7 @@ function CardViewer(props: any) {
         <div className="card-container">
             <div className="card-sides">
                 <h2 className="card-title">{props.currentCard && props.currentCard.title || "New Card"}</h2>
+                <p className="card-body">{props.currentCard && props.currentCard.body}</p>
                 {cardElements}
             </div>
         </div>

@@ -4,6 +4,7 @@ export const data: tCard[] = [
     {
         id: '1',
         title: "Linked List - Insert",
+        body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima enim laborum cupiditate, delectus repellat, excepturi, saepe distinctio nesciunt dolorum dolor dolore odit officia debitis voluptatum.",
         dateAdded: 1682449810274,
         nextReview: 1682449810274,
         cardFace: [
@@ -40,6 +41,7 @@ export const data: tCard[] = [
     {
         id: '2',
         title: "Dijkstra's Algorithm",
+        body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta expedita vitae cupiditate? Explicabo, iste ipsa?",
         dateAdded: 1682449810274,
         nextReview: 1682449810274,
         cardFace: [
@@ -76,6 +78,7 @@ export const data: tCard[] = [
     {
         id: '3',
         title: "Bubble Sort",
+        body: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima asperiores animi harum placeat voluptate exercitationem? Sed doloremque obcaecati mollitia deserunt.",
         dateAdded: 1682449810274,
         nextReview: 1682449810274,
         cardFace: [
