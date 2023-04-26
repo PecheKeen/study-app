@@ -57,9 +57,7 @@ export default function App() {
     }
 
     return <div className="main">
-        <CardViewer
-            currentCard={findCurrentCard()}
-        />
+        <CardViewer currentCard={findCurrentCard()} setCards={setCards} />
         <div className="sidebar">
             <NewCardButton createNewCard={createNewCard} />
             <Tile />
@@ -128,12 +126,11 @@ function CardViewer({ currentCard }: any) {
                     newCards.push(currCard)
                 }
             }
-            console.log(cardFaces)
             return newCards;
         })
     }
 
-    const cardElements = currentCard.cardFace.map((cardFace: cardFace) => {
+    const cardElements = cardFaces.map((cardFace: cardFace) => {
         return <CardFace key={cardFace.id} id={cardFace.id} cardFace={cardFace} toggleCardFace={toggleCardFace} />
     })
 
@@ -152,7 +149,7 @@ function CardFace(props: any) {
         return (
             <div className="card-face" onClick={() => props.toggleCardFace(props.id)}>
                 <h4 className="card-subtitle">{props.cardFace.subtitle}</h4>
-                <p className="card-body">{props.cardFace.isHidden ? props.cardFace.body : ''}</p>
+                <p className="card-body">{props.cardFace.isHidden && props.cardFace.body}</p>
                 <div className="line"></div>
             </div>
         )
