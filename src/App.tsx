@@ -52,12 +52,27 @@ export default function App() {
         }) || cards[0]
     }
 
-    function updateCard(title?: string, subtitle?: string,  ) {
-
+    function updateCardFace(property: string, value: any, id: string) {
+        setCards(prevCards => prevCards.map((card) => {
+            if (card.id === currentCardId) {
+                return {
+                    ...card,
+                    cardFace: card.cardFace.map(cardFace => {
+                        if (cardFace.id === id) {
+                            return { ...cardFace, [property]: value }
+                        } else {
+                            return cardFace;
+                        }
+                    })
+                }
+            } else {
+                return card;
+            }
+        }))
     }
 
     return <div className="main">
-        <CardViewer currentCard={findCurrentCard()} setCards={setCards} />
+        <CardViewer currentCard={findCurrentCard()} updateCardFace={updateCardFace} />
         <div className="sidebar">
             <NewCardButton createNewCard={createNewCard} />
             <Tile />
@@ -108,49 +123,23 @@ function List(props: any) {
 }
 
 //Card Viewer
-function CardViewer({ currentCard }: any) {
-    const [cardFaces, setCardFaces] = React.useState<cardFace[]>([...currentCard.cardFace]);
-
-    function toggleCardFace(id: string) {
-        setCardFaces(prevCards => {
-            const newCards = [];
-            for (let i = 0; i < prevCards.length; i++) {
-                const currCard = prevCards[i]
-                if (cardFaces[i].id === id) {
-                    const updatedCard = {
-                        ...currCard,
-                        isHidden: !currCard.isHidden
-                    }
-                    newCards.push(updatedCard)
-                } else {
-                    newCards.push(currCard)
-                }
-            }
-            return newCards;
-        })
-    }
-
-    const cardElements = cardFaces.map((cardFace: cardFace) => {
-        return <CardFace key={cardFace.id} id={cardFace.id} cardFace={cardFace} toggleCardFace={toggleCardFace} />
+function CardViewer(props: any) {
+    const cardElements = props.currentCard.cardFace.map((cardFace: cardFace) => {
+        return (
+            <div key={cardFace.id} className="card-face" onClick={() => props.updateCardFace('isHidden', !cardFace.isHidden, cardFace.id)}>
+                <h4 className="card-subtitle">{cardFace.subtitle}</h4>
+                <p className="card-body">{cardFace.isHidden && cardFace.body}</p>
+                <div className="line"></div>
+            </div>
+        )
     })
 
     return (
         <div className="card-container">
             <div className="card-sides">
-                <h2 className="card-title">{currentCard && currentCard.title || "New Card"}</h2>
+                <h2 className="card-title">{props.currentCard && props.currentCard.title || "New Card"}</h2>
                 {cardElements}
             </div>
         </div>
     )
-}
-
-//Card Faces
-function CardFace(props: any) {
-        return (
-            <div className="card-face" onClick={() => props.toggleCardFace(props.id)}>
-                <h4 className="card-subtitle">{props.cardFace.subtitle}</h4>
-                <p className="card-body">{props.cardFace.isHidden && props.cardFace.body}</p>
-                <div className="line"></div>
-            </div>
-        )
 }
