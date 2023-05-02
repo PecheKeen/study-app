@@ -9,39 +9,33 @@ export type tCard = {
     id: string,
     title: string,
     body: string,
-    dateAdded: number,
     nextReview: number,
     cardFace: cardFace[],
-    stats: {
-        reviewCount: number,
-        bucket: number,
-    }
+    reviewCount: number,
+    bucket: number,
 }
 
 export type cardFace = {
     id: string,
     isHidden: boolean,
-    subtitle: string,
+    title: string,
     body: string,
 }
 
 export default function App() {
     const [cards, setCards] = React.useState<tCard[]>([...data]);
     const [currentCardId, setCurrentCardId] = React.useState((cards[0] && cards[0].id) || "");
-    const [editorMode, setEditorMode] = React.useState<boolean>(true);
+    const [editorMode, setEditorMode] = React.useState<boolean>(false);
 
     function createNewCard(title: string) {
         const newCard: tCard = {
             id: nanoid(),
             title: title,
             body: "",
-            dateAdded: Date.now(),
             nextReview: Date.now(),
-            cardFace: [{id: nanoid(), isHidden: false, subtitle: "New Card", body: "Write your content here!"}],
-            stats: {
-                reviewCount: 0,
-                bucket: 0,
-            }
+            cardFace: [{id: nanoid(), isHidden: false, title: "New Card", body: "Write your content here!"}],
+            reviewCount: 0,
+            bucket: 0,
         }
         setCards(prevCards => [newCard, ...prevCards])
         setCurrentCardId(newCard.id)
@@ -207,7 +201,7 @@ function CardViewer(props: any) {
     const cardElements = props.card.cardFace.map((cardFace: cardFace) => {
         return (
             <div key={cardFace.id} className="cardface" onClick={() => props.updateCardFace('isHidden', !cardFace.isHidden, cardFace.id)}>
-                <h4 className="cardface-subtitle">{cardFace.subtitle}</h4>
+                <h4 className="cardface-subtitle">{cardFace.title}</h4>
                 <p className="cardface-body">{!cardFace.isHidden && cardFace.body}</p>
                 <div className="line"></div>
             </div>
