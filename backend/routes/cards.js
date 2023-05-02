@@ -1,40 +1,21 @@
 const express = require('express')
-const Card = require('../models/cardModel')
+const { getCards, getCard, createCard, deleteCard, updateCard } = require('../controllers/cardControllers')
 
 const router = express.Router()
 
 // GET all cards
-router.get('/', (req, res) => {
-  res.json({ msg: 'GET all cards' })
-})
+router.get('/', getCards)
 
 // GET single card
-router.get('/:id', (req, res) => {
-  res.json({ msg: 'GET one card' })
-})
+router.get('/:id', getCard)
 
 // POST a new card
-router.post('/', async (req, res) => {
-  const { id, title, body, cardFaces, nextReview, reviewCount } = req.body
-
-  try {
-    const card = await Card.create({ id, title, body, cardFaces, nextReview, reviewCount })
-    res.status(200).json(card)
-  } catch (error) {
-    res.status(400).json({ error: error.message })
-  }
-
-  res.json({ msg: 'POST a new card' })
-})
+router.post('/', createCard)
 
 // DELETE a card
-router.delete('/:id', (req, res) => {
-  res.json({ msg: 'DELETE a card' })
-})
+router.delete('/:id', deleteCard)
 
-// UPDATE a card
-router.patch('/:id', (req, res) => {
-  res.json({ msg: 'UPDATE a card' })
-})
+// PATCH a card
+router.patch('/:id', updateCard)
 
 module.exports = router
