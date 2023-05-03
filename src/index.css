@@ -32,10 +32,20 @@ textarea {
 .card-editor-form {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
-.card-editor-body {
-  height: 100px;
+.card-editor-form > input {
+  height: 30px;
+  font-size: 1em;
+}
+
+.card-editor-form > textarea {
+  height: 200px;
+}
+
+.card-editor-form > button {
+  height: 25px;
 }
 
 .card-container {

@@ -1,148 +1,140 @@
-import React from 'react'
-// import Card from './components/Card'
-// import Tile from './components/Tile'
-// import List from './components/List'
-import { data } from './data'
+import { useEffect, useState, useRef } from 'react'
 import { nanoid } from 'nanoid';
 
 export type tCard = {
-    id: string,
+    _id: string,
     title: string,
     body: string,
     nextReview: number,
-    cardFace: cardFace[],
+    cardFaces: cardFace[],
     reviewCount: number,
     bucket: number,
+    createdAt: string,
+    updatedAt: string,
 }
 
 export type cardFace = {
     id: string,
-    isHidden: boolean,
     title: string,
     body: string,
 }
 
 export default function App() {
-    const [cards, setCards] = React.useState<tCard[]>([...data]);
-    const [currentCardId, setCurrentCardId] = React.useState((cards[0] && cards[0].id) || "");
-    const [editorMode, setEditorMode] = React.useState<boolean>(false);
+    const [cards, setCards] = useState<tCard[]>([]);
 
-    function createNewCard(title: string) {
-        const newCard: tCard = {
-            id: nanoid(),
-            title: title,
-            body: "",
-            nextReview: Date.now(),
-            cardFace: [{id: nanoid(), isHidden: false, title: "New Card", body: "Write your content here!"}],
-            reviewCount: 0,
-            bucket: 0,
+    useEffect(() => {
+        const fetchCards = async () => {
+            const response = await fetch('/api/cards')
+            const json = await response.json()
+
+            if (response.ok) {
+                setCards(json)
+            }
         }
-        setCards(prevCards => [newCard, ...prevCards])
-        setCurrentCardId(newCard.id)
-    }
-
-    function findCurrentCard() {
-        return cards.find(card => {
-            return card.id === currentCardId
-        }) || cards[0]
-    }
-
-    function updateCard(property: string, value: any) {
-        setCards(prevCards => prevCards.map((card) => {
-            if (card.id === currentCardId) {
-                return {
-                    ...card,
-                    [property]: value
-                }
-            } else {
-                return card
-            }
-        }))
-    }
-
-    function updateCardFace(property: string, value: any, id: string) {
-        setCards(prevCards => prevCards.map((card) => {
-            if (card.id === currentCardId) {
-                return {
-                    ...card,
-                    cardFace: card.cardFace.map(cardFace => {
-                        if (cardFace.id === id) {
-                            return { ...cardFace, [property]: value }
-                        } else {
-                            return cardFace;
-                        }
-                    })
-                }
-            } else {
-                return card;
-            }
-        }))
-    }
+        
+        fetchCards()
+    }, [])
 
     return <div className="main">
-        <CardViewer card={findCurrentCard()} updateCardFace={updateCardFace} />
-        {editorMode ? <CardEditor card={findCurrentCard()} updateCard={updateCard} />
-                    : <Sidebar cards={cards} createNewCard={createNewCard} setCurrentCardId={setCurrentCardId} />}
+        <Sidebar cards={ cards } />
     </div>
 }
 
-//Card Editor
-function CardEditor({card, updateCard}:any) {
-    return (
-        <div className="card-editor-container">
-            <form className='card-editor-form'>
-                <label htmlFor="card-title">Title: </label>
-                <input
-                    className='card-editor-title'
-                    type="text"
-                    id='card-title'
-                    name='card-title' value={card.title}
-                    onChange={(e) => updateCard("title", e.target.value)} />
-                <label htmlFor="card-body">Body: </label>
-                <textarea
-                    className='card-editor-body'
-                    id='card-body'
-                    name='card-body'
-                    value={card.body}
-                    onChange={(e) => updateCard("body", e.target.value)} />
-            </form>
-        </div>
-    )
-}
+// Card Editor
+function CardEditor() {
+    const [title, setTitle] = useState<string>("")
+    const [body, setBody] = useState<string>("")
+    const [error, setError] = useState<string | null>(null)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const dialogRef = useRef<HTMLDialogElement>(null)
 
-//Sidebar
-function Sidebar({ cards, createNewCard, setCurrentCardId}:any) {
-    return (
-        <div className="sidebar">
-            <NewCardButton createNewCard={createNewCard} />
-            <Tile />
-            <List cards={cards} setCurrentCardId={setCurrentCardId} />
-        </div>
-    )
-}
-
-//New Card Button
-function NewCardButton(props: any) {
-    const [title, setTitle] = React.useState<string>("")
-
-    function handleSubmit(event: any) {
-        event.preventDefault()
-        if (title) {
-            props.createNewCard(title);
-            setTitle("")
-        }
+    console.log(dialogRef)
+  
+    function openModal() {
+        if(dialogRef.current) dialogRef.current.showModal()
     }
 
+    function closeModal() {
+        if(dialogRef.current) dialogRef.current.close()
+    }
+
+    async function handleSubmit(e:any) {
+        e.preventDefault()
+
+        const newCard = {
+            title,
+            body,
+            cardFaces: [],
+            nextReview: Date.now(),
+            reviewCount: 0
+        }
+
+        const response = await fetch('/api/cards', {
+            method: 'POST',
+            body: JSON.stringify(newCard),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const json = await response.json()
+        console.log(response, json)
+
+        if (!response.ok) {
+            setError(json.error)
+            console.log(error)
+        }
+        if (response.ok) {
+            setTitle('')
+            setBody('')
+            setError(null)
+            console.log('new card POSTed', json)
+        }
+    }
+    
     return (
-        <form className="new-card-form" onSubmit={handleSubmit}>
-            <label>Title: </label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <input type="submit" value="+"/>
-        </form>
+        <>
+            <button onClick={openModal}>+</button>
+            <dialog className="card-editor-container" ref={dialogRef}>
+                <form method='dialog' className='card-editor-form' onSubmit={handleSubmit}>
+                    <label>Title: </label>
+                    <input
+                        type="text"
+                        id='card-title'
+                        name='card-title'
+                        onChange={(e) => setTitle(e.target.value)}
+                        value={title}
+                    />
+                    <label>Body: </label>
+                    <textarea
+                        id='card-body'
+                        name='card-body'
+                        onChange={(e) => setBody(e.target.value)}
+                        value={body}
+                    />
+                    <div>
+                        <button formMethod='dialog' type='submit'>Add Card</button>
+                        <button type='button' onClick={closeModal}>Cancel</button>
+                    </div>
+                </form>
+            </dialog>
+        </>
     )
 }
 
-//Recommendation Tiles
+// Sidebar
+function Sidebar({ cards, createNewCard, setCurrentCardId }: any) {
+    
+
+    return (
+        <div className="sidebar">
+            <CardEditor />
+            <Tile />
+            <List cards={ cards } />
+        </div>
+    )
+}
+
+// Recommendation Tiles
 function Tile() {
     return (
         <div className="tiles">
@@ -177,10 +169,10 @@ function Tile() {
     )
 }
 
-//Card List
+// Card List
 function List(props: any) {
     const listElements = props.cards.map((card: tCard) => (
-        <div key={card.id} className="list-item" onClick={() => props.setCurrentCardId(card.id)}>
+        <div key={card._id} className="list-item" onClick={() => console.log('clicked')}>
             <p className="list-item-title">{card.title}</p>
             <div className="list-item-status"></div>
         </div>
@@ -196,25 +188,26 @@ function List(props: any) {
     )
 }
 
-//Card Viewer
-function CardViewer(props: any) {
-    const cardElements = props.card.cardFace.map((cardFace: cardFace) => {
-        return (
-            <div key={cardFace.id} className="cardface" onClick={() => props.updateCardFace('isHidden', !cardFace.isHidden, cardFace.id)}>
-                <h4 className="cardface-subtitle">{cardFace.title}</h4>
-                <p className="cardface-body">{!cardFace.isHidden && cardFace.body}</p>
-                <div className="line"></div>
-            </div>
-        )
-    })
+// Card Viewer
+// function CardViewer(props: any) {
+//     // const cardElements = props.card.cardFaces.map((cardFace: cardFace) => {
+//     //     if (!cardFace) return;
+//     //     return (
+//     //         <div key={cardFace.id} className="cardface">
+//     //             <h4 className="cardface-subtitle">{cardFace.title}</h4>
+//     //             <p className="cardface-body">{cardFace.body}</p>
+//     //             <div className="line"></div>
+//     //         </div>
+//     //     )
+//     // })
 
-    return (
-        <div className="card-container">
-            <div className="card-sides">
-                <h2 className="card-title">{props.card && props.card.title || "New Card"}</h2>
-                <p className="card-body">{props.card && props.card.body}</p>
-                {cardElements}
-            </div>
-        </div>
-    )
-}
+//     return (
+//         <div className="card-container">
+//             <div className="card-sides">
+//                 <h2 className="card-title">{props.card && props.card.title || "New Card"}</h2>
+//                 <p className="card-body">{props.card && props.card.body}</p>
+//                 {/* {cardElements} */}
+//             </div>
+//         </div>
+//     )
+// }
