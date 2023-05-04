@@ -55,7 +55,7 @@ textarea {
   align-items: center;
   overflow: scroll;
 }
-.card-sides {
+.card-main {
   display: flex;
   flex-direction: column;
 }

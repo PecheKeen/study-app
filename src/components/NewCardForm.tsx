@@ -1,6 +1,8 @@
-import { useState, useRef} from 'react'
+import { useState, useRef } from 'react'
+import { useCardsContext } from '../hooks/useCardsContext'
 
 export default function NewCardForm() {
+    const { dispatch } = useCardsContext()
     const [title, setTitle] = useState<string>("")
     const [body, setBody] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
@@ -34,7 +36,6 @@ export default function NewCardForm() {
             }
         })
         const json = await response.json()
-        console.log(response, json)
 
         if (!response.ok) {
             setError(json.error)
@@ -44,7 +45,7 @@ export default function NewCardForm() {
             setTitle('')
             setBody('')
             setError(null)
-            console.log('new card POSTed', json)
+            dispatch({type: 'CREATE_CARD', payload: json})
         }
     }
     

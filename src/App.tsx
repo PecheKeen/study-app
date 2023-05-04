@@ -1,54 +1,63 @@
-import { useEffect, useState, useRef } from 'react'
-import NewCardForm from './components/NewCardForm';
+import { useEffect, useState } from 'react'
+import { useCardsContext } from './hooks/useCardsContext'
+import NewCardForm from './components/NewCardForm'
 
 export type tCard = {
     _id: string,
     title: string,
     body: string,
-    nextReview: number,
     cardFaces: cardFace[],
+    nextReview: number,
     reviewCount: number,
-    bucket: number,
     createdAt: string,
     updatedAt: string,
 }
 
 export type cardFace = {
-    id: string,
+    _id: string,
     title: string,
     body: string,
 }
 
 export default function App() {
-    const [cards, setCards] = useState<tCard[]>([]);
+    const {cards, dispatch} = useCardsContext()
+    const [card, setCard] = useState<tCard | undefined>(undefined)
 
+    //Fetch data from DB
     useEffect(() => {
         const fetchCards = async () => {
             const response = await fetch('/api/cards')
             const json = await response.json()
 
             if (response.ok) {
-                setCards(json)
+                dispatch({type: 'SET_CARDS', payload: json})
             }
         }
         
         fetchCards()
     }, [])
 
+    function getCardById(id: string) {
+        setCard(() => {
+            return cards.find((card:tCard) => {
+                return card._id === id
+            }) || cards[0]
+        })
+    }
+
     return <div className="main">
-        <Sidebar cards={ cards } />
+        <CardViewer card={card} />
+        <Sidebar getCard={getCardById} />
     </div>
 }
 
 // Sidebar
-function Sidebar({ cards }: any) {
-    
-
+function Sidebar({ getCard }: any) {
     return (
         <div className="sidebar">
             <NewCardForm />
             <Tile />
-            <List cards={ cards } />
+            <List getCard={getCard} />
         </div>
     )
 }
@@ -89,9 +98,11 @@ function Tile() {
 }
 
 // Card List
-function List(props: any) {
-    const listElements = props.cards.map((card: tCard) => (
-        <div key={card._id} className="list-item" onClick={() => console.log('clicked')}>
+function List({ getCard }: any) {
+    const { cards, dispatch } = useCardsContext()
+
+    const listElements = cards.map((card: tCard) => (
+        <div key={card._id} className="list-item" onClick={() => getCard(card._id)}>
             <p className="list-item-title">{card.title}</p>
             <div className="list-item-status"></div>
         </div>
@@ -101,32 +112,43 @@ function List(props: any) {
         <div className="list-container">
             <h3>Browse</h3>
             <div className="list">
-                {listElements}             
+                {listElements}
             </div>
         </div>
     )
 }
 
 // Card Viewer
-// function CardViewer(props: any) {
-//     // const cardElements = props.card.cardFaces.map((cardFace: cardFace) => {
-//     //     if (!cardFace) return;
-//     //     return (
-//     //         <div key={cardFace.id} className="cardface">
-//     //             <h4 className="cardface-subtitle">{cardFace.title}</h4>
-//     //             <p className="cardface-body">{cardFace.body}</p>
-//     //             <div className="line"></div>
-//     //         </div>
-//     //     )
-//     // })
+    // Card Update/Edit
+    // Card Delete
+function CardViewer({ card }: any) {
 
-//     return (
-//         <div className="card-container">
-//             <div className="card-sides">
-//                 <h2 className="card-title">{props.card && props.card.title || "New Card"}</h2>
-//                 <p className="card-body">{props.card && props.card.body}</p>
-//                 {/* {cardElements} */}
-//             </div>
-//         </div>
-//     )
-// }
+    return (
+        <div className="card-container">
+            <div className="card-main">
+                <h2 className="card-title">{card && card.title || "Create A New Card"}</h2>
+                <p className="card-body">{card && card.body}</p>
+            </div>
+        </div>
+    )
+}
+
+// Card Face Viewer
+    // Card Face Updater Function
+    // Card Face Delete Function
+    // Card Face Updater Form
+function CardFaceViewer({ card }: any) {
+    // let cardElements
+    // if (card) {
+    //     cardElements = card.cardFaces.map((cardFace: cardFace) => {
+    //         if (!cardFace) return;
+    //         return (
+    //             <div key={cardFace._id} className="cardface">
+    //                 <h4 className="cardface-subtitle">{cardFace.title}</h4>
+    //                 <p className="cardface-body">{cardFace.body}</p>
+    //                 <div className="line"></div>
+    //             </div>
+    //         )
+    //     })
+    // }
+}
