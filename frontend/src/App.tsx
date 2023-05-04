@@ -119,22 +119,5 @@ function List({ getCard }: any) {
   )
 }
 
-// Card Face Viewer
-    // Card Face Updater Function
-    // Card Face Delete Function
-    // Card Face Updater Form
 function CardFaceViewer({ card }: any) {
-    // let cardElements
-    // if (card) {
-    //     cardElements = card.cardFaces.map((cardFace: cardFace) => {
-    //         if (!cardFace) return;
-    //         return (
-    //             <div key={cardFace._id} className="cardface">
-    //                 <h4 className="cardface-subtitle">{cardFace.title}</h4>
-    //                 <p className="cardface-body">{cardFace.body}</p>
-    //                 <div className="line"></div>
-    //             </div>
-    //         )
-    //     })
-    // }
 }
