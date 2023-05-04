@@ -17,6 +17,10 @@ export function cardsReducer(state:any, action:any ) {
       return {
         cards: state.cards.filter((card: tCard) => card._id !== action.payload._id)
       }
+    case 'UPDATE_CARD':
+      return {
+        cards: [...state.cards.filter((card: tCard) => card._id !== action.payload._id), action.payload]
+      }
     default:
       return state
   }
