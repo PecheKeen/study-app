@@ -49,15 +49,20 @@ textarea {
 }
 
 .card-container {
-  background-color: #ddd;
   width: 600px;
   height: 100%;
   align-items: center;
   overflow: scroll;
 }
-.card-main {
+
+.card {
+  background-color: #ddd;
   display: flex;
   flex-direction: column;
+}
+
+.card-sub {
+  margin-top: 1rem;
 }
 
 .card-title {

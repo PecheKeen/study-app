@@ -19,19 +19,19 @@ export type cardFace = {
   body: string,
 }
 
-const defaultCard: tCard = {
+export const defaultCard: tCard = {
   _id: 'default',
   title: "Welcome to Jeremy's Study App",
   body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente deserunt distinctio in voluptatum dolore quae explicabo animi obcaecati, error magni.",
   cardFaces: [
     {
       _id: '64541c2128aa517105991a21',
-      title: 'First Sub Card',
+      title: 'Getting Started',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae."
     },
     {
       _id: '64541c2128aa517105991a22',
-      title: 'Second Sub Card',
+      title: 'What is a SRS?',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae."
     },
     {
@@ -74,7 +74,8 @@ export default function App() {
   }
 
   return <div className="main">
-    {viewMode ? <CardViewer card={card} viewMode={viewMode} setViewMode={setViewMode} /> : <CardEditor card={card} setCard={setCard} setViewMode={setViewMode} />}
+    {viewMode ? <CardViewer card={card} setViewMode={setViewMode} />
+              : <CardEditor card={card} setCard={setCard} setViewMode={setViewMode} />}
     <Sidebar getCard={getCardById} />
   </div>
 }
@@ -135,7 +136,7 @@ function List({ getCard }: any) {
       <div className="list-item-status"></div>
     </div>
   ))
-  
+
   return (
     <div className="list-container">
       <h3>Browse</h3>
@@ -147,13 +148,23 @@ function List({ getCard }: any) {
 }
 
 function CardViewer({ card, setViewMode }: any) {
+  const cardFaces = card.cardFaces.map((cardface: cardFace) => (
+    <div key={cardface._id} className='card card-sub'>
+      <h3 className="card-title">{cardface.title}</h3>
+      <p className="card-body">{cardface.body}</p>
+    </div>
+  ))
+
+  console.log(cardFaces)
+
   return (
     <div className="card-container">
       {card._id !== 'default' && <button type='button' onClick={() => setViewMode(false)}>Edit</button>}
-      <div className="card-main">
+      <div className="card">
         <h2 className="card-title">{card && card.title}</h2>
         <p className="card-body">{card && card.body}</p>
       </div>
+      {cardFaces}
     </div>
   )
 }
@@ -164,9 +175,10 @@ function CardEditor({ card, setCard, setViewMode }: any) {
   const { dispatch } = useCardsContext()
 
   async function handleSave() {
+    const updatedCard = {title: title, body: body}
     const response = await fetch('/api/cards/' + card._id, {
       method: 'PATCH',
-      body: JSON.stringify(card),
+      body: JSON.stringify(updatedCard),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -176,6 +188,8 @@ function CardEditor({ card, setCard, setViewMode }: any) {
 
     if (response.ok) {
       dispatch({ type: 'UPDATE_CARD', payload: json })
+      setCard(json)
+      setViewMode(true)
     }
   }
     
@@ -183,6 +197,7 @@ function CardEditor({ card, setCard, setViewMode }: any) {
     const response = await fetch('/api/cards/' + card._id, {
       method: 'DELETE'
     })
+
     const json = await response.json()
 
     if (response.ok) {
@@ -194,16 +209,24 @@ function CardEditor({ card, setCard, setViewMode }: any) {
 
   return (
     <div className="card-container">
-      <button type='button' onClick={handleSave}>Save</button>
       <button type='button' onClick={() => setViewMode(true)}>Cancel</button>
+      <button type='button' onClick={handleSave}>Save</button>
       <button type='button' onClick={handleDelete}>Delete</button>
       <div className="card-main">
-        <h2 className="card-title">{card && card.title}</h2>
-        <p className="card-body">{card && card.body}</p>
+        <input
+          type="text"
+          className='card-edit-title'
+          name='card-title'
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}>
+        </input>
+        <textarea
+          className='card-edit-body'
+          name='card-body'
+          onChange={(e) => setBody(e.target.value)}
+          value={body}
+        />
       </div>
     </div>
   )
-}
-
-function CardFaceViewer({ card }: any) {
 }
