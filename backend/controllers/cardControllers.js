@@ -27,10 +27,10 @@ const getCard = async (req, res) => {
 
 // POST new card
 const createCard = async (req, res) => {
-  const { id, title, body, cardFaces, nextReview, reviewCount } = req.body
+  const { id, title, body, cardfaces, nextReview, reviewCount } = req.body
 
   try {
-    const card = await Card.create({ id, title, body, cardFaces, nextReview, reviewCount })
+    const card = await Card.create({ id, title, body, cardfaces, nextReview, reviewCount })
     res.status(200).json(card)
   } catch (error) {
     res.status(400).json({ error: error.message })

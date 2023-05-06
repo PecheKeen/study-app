@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const cardFaceSchema = new Schema({
+const cardfaceSchema = new Schema({
   title: String,
   body: {
     type: String,
@@ -16,11 +16,8 @@ const cardSchema = new Schema({
     type: String,
     required: true
   },
-  body: {
-    type: String,
-    required: true
-  },
-  cardFaces: [cardFaceSchema],
+  body: String,
+  cardfaces: [cardfaceSchema],
   nextReview: Number,
   reviewCount: Number
 }, { timestamps: true })

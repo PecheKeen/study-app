@@ -4,8 +4,8 @@ import { defaultCard } from '../App'
 
 // Card Editor
 export default function CardEditor({ card, setCard, setViewMode }: any) {
-  const [title, setTitle] = useState(card && card.title)
-  const [body, setBody] = useState(card && card.body)
+  const [title, setTitle] = useState(card.title)
+  const [body, setBody] = useState(card.body)
   const { dispatch } = useCardsContext()
 
   async function handleSave() {

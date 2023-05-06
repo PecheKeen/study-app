@@ -7,14 +7,14 @@ export default function NewCardForm() {
   const [body, setBody] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
 
-  const dialogRef = useRef<HTMLDialogElement>(null)
+  const modalRef = useRef<HTMLDialogElement>(null)
     
   function openModal() {
-    if(dialogRef.current) dialogRef.current.showModal()
+    if(modalRef.current) modalRef.current.showModal()
   }
 
   function closeModal() {
-    if(dialogRef.current) dialogRef.current.close()
+    if(modalRef.current) modalRef.current.close()
   }
 
   async function handleSubmit(e:any) {
@@ -52,7 +52,7 @@ export default function NewCardForm() {
   return (
     <>
       <button onClick={openModal}>+</button>
-      <dialog className="card-editor-container" ref={dialogRef}>
+      <dialog className="card-editor-container" ref={modalRef}>
         <form method='dialog' className='card-editor-form' onSubmit={handleSubmit}>
           <label>Title: </label>
           <input
