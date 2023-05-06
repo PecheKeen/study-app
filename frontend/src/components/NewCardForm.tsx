@@ -70,7 +70,7 @@ export default function NewCardForm() {
             value={body}
           />
           <div>
-            <button formMethod='dialog' type='submit'>Add Card</button>
+            <button formMethod='dialog' type='submit' onClick={closeModal}>Add Card</button>
             <button type='button' onClick={closeModal}>Cancel</button>
           </div>
         </form>

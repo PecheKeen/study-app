@@ -7,7 +7,8 @@ const cardFaceSchema = new Schema({
   body: {
     type: String,
     required: true
-  }
+  },
+  isHidden: Boolean
 })
 
 const cardSchema = new Schema({
