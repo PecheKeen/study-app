@@ -1,12 +1,18 @@
 import { useState } from "react"
 import { useCardsContext } from "../hooks/useCardsContext"
+import { tCard } from "../App"
+type Props = {
+  card: tCard
+  setCard: React.Dispatch<React.SetStateAction<tCard>>,
+  setShowNewFacecardForm: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-export default function NewFacecardForm({ card, setCard, setShowNewFacecardForm }: any) {
+export default function NewFacecardForm({ card, setCard, setShowNewFacecardForm }: Props) {
   const [title, setTitle] = useState<string>("")
   const [body, setBody] = useState<string>("")
   const { dispatch } = useCardsContext()
 
-
+  // Create New Cardface on DB
   async function handleSave() {
     const updatedCard = { cardfaces: [...card.cardfaces, {title: title, body: body }] }
 

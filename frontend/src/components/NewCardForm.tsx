@@ -8,22 +8,25 @@ export default function NewCardForm() {
   const [error, setError] = useState<string | null>(null)
 
   const modalRef = useRef<HTMLDialogElement>(null)
-    
+  
+  // Open Modal
   function openModal() {
     if(modalRef.current) modalRef.current.showModal()
   }
 
+  // Close Modal
   function closeModal() {
     if(modalRef.current) modalRef.current.close()
   }
 
+  // Create New Card on DB
   async function handleSubmit(e:any) {
     e.preventDefault()
 
     const newCard = {
       title,
       body,
-      cardFaces: [],
+      cardfaces: [],
       nextReview: Date.now(),
       reviewCount: 0
     }

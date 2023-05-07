@@ -5,15 +5,15 @@ import { useCardsContext } from './hooks/useCardsContext'
 import NewCardForm from './components/NewCardForm'
 import CardEditor from './components/CardEditor'
 import CardViewer from './components/CardViewer'
-import RecommendedCardTiles from './components/RecommendedCardTiles'
 import CardList from './components/CardList'
+import RecommendedCardTiles from './components/RecommendedCardTiles'
 
 export default function App() {
   const {cards, dispatch} = useCardsContext()
   const [card, setCard] = useState<tCard>(defaultCard)
   const [viewMode, setViewMode] = useState<boolean>(true)
 
-  //Fetch data from DB
+  // Fetch data from DB
   useEffect(() => {
     const fetchCards = async () => {
       const response = await fetch('/api/cards')
@@ -27,6 +27,7 @@ export default function App() {
     fetchCards()
   }, [])
 
+  // Get Card with ID and Set as current
   function getCardById(id: string) {
     setCard(() => {
       return cards.find((card:tCard) => {
@@ -48,7 +49,7 @@ export default function App() {
   )
 }
 
-//Component Types
+// Component Types
 export type tCard = {
   _id: string,
   title: string,
@@ -66,7 +67,7 @@ export type cardface = {
   body: string,
 }
 
-//Default Card
+// Default Card
 export const defaultCard = {
   _id: 'default',
   title: "Welcome to Jeremy's Study App",

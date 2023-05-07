@@ -1,13 +1,21 @@
 import { useState } from 'react'
 import { useCardsContext } from '../hooks/useCardsContext'
 import { defaultCard } from '../App'
+import { tCard } from '../App'
+
+type Props = {
+  card: tCard
+  setCard: React.Dispatch<React.SetStateAction<tCard>>,
+  setViewMode: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 // Card Editor
-export default function CardEditor({ card, setCard, setViewMode }: any) {
+export default function CardEditor({ card, setCard, setViewMode }:Props) {
   const [title, setTitle] = useState(card.title)
   const [body, setBody] = useState(card.body)
   const { dispatch } = useCardsContext()
 
+  // Save Card to DB
   async function handleSave() {
     const updatedCard = {title: title, body: body}
     const response = await fetch('/api/cards/' + card._id, {
@@ -26,7 +34,8 @@ export default function CardEditor({ card, setCard, setViewMode }: any) {
       setViewMode(true)
     }
   }
-    
+  
+  // Delete Card from DB
   async function handleDelete() {
     const response = await fetch('/api/cards/' + card._id, {
       method: 'DELETE'
