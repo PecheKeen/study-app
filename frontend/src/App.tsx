@@ -10,7 +10,7 @@ import RecommendedCardTiles from './components/RecommendedCardTiles'
 
 export default function App() {
   const {cards, dispatch} = useCardsContext()
-  const [card, setCard] = useState<tCard>(defaultCard)
+  const [card, setCard] = useState<Card>(defaultCard)
   const [viewMode, setViewMode] = useState<boolean>(true)
 
   // Fetch data from DB
@@ -30,7 +30,7 @@ export default function App() {
   // Get Card with ID and Set as current
   function getCardById(id: string) {
     setCard(() => {
-      return cards.find((card:tCard) => {
+      return cards.find((card:Card) => {
         return card._id === id
       }) || cards[0]
     })
@@ -50,18 +50,18 @@ export default function App() {
 }
 
 // Component Types
-export type tCard = {
+export type Card = {
   _id: string,
   title: string,
   body: string,
-  cardfaces: cardface[],
+  cardfaces: Cardface[],
   nextReview: number,
   reviewCount: number,
   createdAt: string,
   updatedAt: string,
 }
 
-export type cardface = {
+export type Cardface = {
   _id: string,
   title: string,
   body: string,

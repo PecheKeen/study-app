@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useCardsContext } from '../hooks/useCardsContext'
-import { tCard, cardface } from '../App'
+import { Card, Cardface } from '../App'
 
 type Props = {
-  card: tCard,
-  cardface: cardface,
+  card: Card,
+  cardface: Cardface,
   setIsEditable: React.Dispatch<React.SetStateAction<boolean>>
-  setCard: React.Dispatch<React.SetStateAction<tCard>>
+  setCard: React.Dispatch<React.SetStateAction<Card>>
 }
 
 
@@ -19,7 +19,7 @@ export default function CardfaceEditor({ card, cardface, setIsEditable, setCard 
   async function handleSave() {
 
     const updatedCard = { cardfaces: [
-      ...card.cardfaces.filter((e: cardface) => e._id !== cardface._id),
+      ...card.cardfaces.filter((e: Cardface) => e._id !== cardface._id),
       { ...cardface, title: title, body: body }
     ] }
 
@@ -42,7 +42,7 @@ export default function CardfaceEditor({ card, cardface, setIsEditable, setCard 
   
   // Delete Cardface from DB
   async function handleDelete() {
-    const updatedCard = { cardfaces: [...card.cardfaces.filter((ele:cardface) => ele._id !== cardface._id)] }
+    const updatedCard = { cardfaces: [...card.cardfaces.filter((ele:Cardface) => ele._id !== cardface._id)] }
 
     const response = await fetch('/api/cards/' + card._id, {
       method: 'PATCH',

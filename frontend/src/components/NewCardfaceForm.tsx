@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { useCardsContext } from "../hooks/useCardsContext"
-import { tCard } from "../App"
+import { Card } from "../App"
+
 type Props = {
-  card: tCard
-  setCard: React.Dispatch<React.SetStateAction<tCard>>,
+  card: Card
+  setCard: React.Dispatch<React.SetStateAction<Card>>,
   setShowNewFacecardForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 

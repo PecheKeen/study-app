@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { cardface } from '../App'
 import NewFacecardForm from './NewCardfaceForm'
 import CardfaceViewer from './CardfaceViewer'
-import { tCard } from '../App'
+import { Card, Cardface } from '../App'
 
 type Props = {
-  card: tCard
-  setCard: React.Dispatch<React.SetStateAction<tCard>>,
+  card: Card
+  setCard: React.Dispatch<React.SetStateAction<Card>>,
   setViewMode: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -14,7 +13,7 @@ export default function CardViewer({ card, setCard, setViewMode }: Props) {
   const [showNewFacecardForm, setShowNewFacecardForm] = useState<boolean>(false)
 
   // Create Cardface Elements
-  const cardfaceElements = card.cardfaces.map((cardface: cardface) => (
+  const cardfaceElements = card.cardfaces.map((cardface: Cardface) => (
     <CardfaceViewer key={cardface._id} card={card} cardface={cardface} setCard={setCard} />
   ))
 

@@ -1,11 +1,11 @@
 import { useState } from "react"
 import CardfaceEditor from "./CardfaceEditor"
-import { tCard, cardface } from "../App"
+import { Card, Cardface } from "../App"
 
 type Props = {
-  card: tCard,
-  cardface: cardface,
-  setCard: React.Dispatch<React.SetStateAction<tCard>>
+  card: Card,
+  cardface: Cardface,
+  setCard: React.Dispatch<React.SetStateAction<Card>>
 }
 
 export default function CardfaceViewer({ card, cardface, setCard }: Props) {
