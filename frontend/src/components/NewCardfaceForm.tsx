@@ -8,7 +8,7 @@ export default function NewFacecardForm({ card, setCard, setShowNewFacecardForm 
 
 
   async function handleSave() {
-    const updatedCard = { cardfaces: [...card.cardfaces, {title: title, body: body, isHidden: true}] }
+    const updatedCard = { cardfaces: [...card.cardfaces, {title: title, body: body }] }
 
     const response = await fetch('/api/cards/' + card._id, {
       method: 'PATCH',

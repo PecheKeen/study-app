@@ -5,6 +5,8 @@ import { useCardsContext } from './hooks/useCardsContext'
 import NewCardForm from './components/NewCardForm'
 import CardEditor from './components/CardEditor'
 import CardViewer from './components/CardViewer'
+import RecommendedCardTiles from './components/RecommendedCardTiles'
+import CardList from './components/CardList'
 
 export default function App() {
   const {cards, dispatch} = useCardsContext()
@@ -33,75 +35,14 @@ export default function App() {
     })
   }
 
-  return <div className="main">
-    {viewMode ? <CardViewer card={card} setCard={setCard} setViewMode={setViewMode} />
-              : <CardEditor card={card} setCard={setCard} setViewMode={setViewMode} />}
-    <Sidebar getCard={getCardById} />
-  </div>
-}
-
-// Sidebar
-function Sidebar({ getCard }: any) {
   return (
-    <div className="sidebar">
-      <NewCardForm />
-      <Tile />
-      <List getCard={getCard} />
-    </div>
-  )
-}
-
-// Recommendation Tiles
-function Tile() {
-  return (
-    <div className="tiles">
-      <h3>Suggested Items</h3>
-      <div className="tile-container">
-        <div className="tile">
-          <h4 className="tile-title">Linked List - Insert</h4>
-          <div className="tile-rank"></div>
-        </div>
-        <div className="tile">
-          <h4 className="tile-title">Dijkstra's Algorithm</h4>
-          <div className="tile-rank"></div>
-        </div>
-        <div className="tile">
-          <h4 className="tile-title">Two Sum</h4>
-          <div className="tile-rank"></div>
-        </div>
-        <div className="tile">
-          <h4 className="tile-title">Bubble Sort</h4>
-          <div className="tile-rank"></div>
-        </div>
-        <div className="tile">
-          <h4 className="tile-title">Queue</h4>
-          <div className="tile-rank"></div>
-        </div>
-        <div className="tile">
-          <h4 className="tile-title"></h4>
-          <div className="tile-rank"></div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// Card List
-function List({ getCard }: any) {
-  const { cards, dispatch } = useCardsContext()
-
-  const listElements = cards.map((card: tCard) => (
-    <div key={card._id} className="list-item" onClick={() => getCard(card._id)}>
-      <p className="list-item-title">{card.title}</p>
-      <div className="list-item-status"></div>
-    </div>
-  ))
-
-  return (
-    <div className="list-container">
-      <h3>Browse</h3>
-      <div className="list">
-        {listElements}
+    <div className="main">
+      {viewMode ? <CardViewer card={card} setCard={setCard} setViewMode={setViewMode} />
+                : <CardEditor card={card} setCard={setCard} setViewMode={setViewMode} />}
+      <div className="sidebar">
+        <NewCardForm />
+        <RecommendedCardTiles />
+        <CardList getCard={getCardById} />
       </div>
     </div>
   )
@@ -123,7 +64,6 @@ export type cardface = {
   _id: string,
   title: string,
   body: string,
-  isHidden: boolean
 }
 
 //Default Card
@@ -137,21 +77,18 @@ export const defaultCard = {
       id: 'default',
       title: 'Getting Started',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
-      isHidden: false
     },
     {
       _id: '64541c2128aa517105991a22',
       id: 'default',
       title: 'What is a SRS?',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
-      isHidden: false
     },
     {
       _id: '64541c2128aa517105991a23',
       id: 'default',
       title: 'Click Me!',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
-      isHidden: true
     }
   ],
   nextReview: 1683079368819,

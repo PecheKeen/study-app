@@ -11,7 +11,7 @@ export default function CardfaceEditor({ card, cardface, setIsEditable, setCard 
 
     const updatedCard = { cardfaces: [
       ...card.cardfaces.filter((e: cardface) => e._id !== cardface._id),
-      { ...cardface, title: title, body: body, isHidden: true }
+      { ...cardface, title: title, body: body }
     ] }
 
     const response = await fetch('/api/cards/' + card._id, {
