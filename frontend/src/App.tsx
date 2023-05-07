@@ -4,61 +4,7 @@ import { useCardsContext } from './hooks/useCardsContext'
 // Component Imports
 import NewCardForm from './components/NewCardForm'
 import CardEditor from './components/CardEditor'
-
-
-//Component Types
-export type tCard = {
-  _id: string,
-  title: string,
-  body: string,
-  cardfaces: cardface[],
-  nextReview: number,
-  reviewCount: number,
-  createdAt: string,
-  updatedAt: string,
-}
-
-export type cardface = {
-  _id: string,
-  title: string,
-  body: string,
-  isHidden: boolean
-}
-
-
-//Default Card
-export const defaultCard = {
-  _id: 'default',
-  title: "Welcome to Jeremy's Study App",
-  body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente deserunt distinctio in voluptatum dolore quae error magni.",
-  cardfaces: [
-    {
-      _id: '64541c2128aa517105991a21',
-      id: 'default',
-      title: 'Getting Started',
-      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
-      isHidden: false
-    },
-    {
-      _id: '64541c2128aa517105991a22',
-      id: 'default',
-      title: 'What is a SRS?',
-      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
-      isHidden: false
-    },
-    {
-      _id: '64541c2128aa517105991a23',
-      id: 'default',
-      title: 'Click Me!',
-      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
-      isHidden: true
-    }
-  ],
-  nextReview: 1683079368819,
-  reviewCount: 0,
-  createdAt: "2023-05-03T02:02:48.826+00:00",
-  updatedAt: "2023-05-03T02:02:48.826+00:00",
-}
+import CardViewer from './components/CardViewer'
 
 export default function App() {
   const {cards, dispatch} = useCardsContext()
@@ -161,119 +107,55 @@ function List({ getCard }: any) {
   )
 }
 
-// Card Viewer
-function CardViewer({ card, setCard, setViewMode }: any) {
-  const cardfaceElements = card.cardfaces.map((cardface: cardface) => (
-    <CardfaceViewer key={cardface._id} card={card} cardface={cardface} setCard={setCard} toggleIsHidden={toggleIsHidden} />
-  ))
-
-  function toggleIsHidden(id: string) {
-    setCard((prevCard:tCard)=> {
-      const newCardfaces: cardface[] = []
-      for(let i = 0; i < prevCard.cardfaces.length; i++) {
-        const currentCardface = prevCard.cardfaces[i]
-        if(currentCardface._id === id) {
-          const updatedCardface = { ...currentCardface, isHidden: !currentCardface.isHidden }
-          newCardfaces.push(updatedCardface)
-        } else {
-          newCardfaces.push(currentCardface)
-        }
-      }
-      return {...prevCard, cardfaces: newCardfaces}
-    })
-  }
-
-  return (
-    <div className="card-container">
-      {card._id !== 'default' && <button type='button' onClick={() => setViewMode(false)}>Edit</button>}
-      {card._id !== 'default' && <button type='button' onClick={() => {}}>+</button>}
-      <div className="card"  >
-        <h2 className="card-title">{card && card.title}</h2>
-        <p className="card-body">{card && card.body}</p>
-      </div>
-      {cardfaceElements}
-    </div>
-  )
+//Component Types
+export type tCard = {
+  _id: string,
+  title: string,
+  body: string,
+  cardfaces: cardface[],
+  nextReview: number,
+  reviewCount: number,
+  createdAt: string,
+  updatedAt: string,
 }
 
-function CardfaceViewer({ card, cardface, toggleIsHidden }: any) {
-  const [isEditable, setIsEditable] = useState<boolean>(false)
-  
-  return isEditable ? (<CardfaceEditor card={card} cardface={cardface} setIsEditable={setIsEditable} />)
-    : (
-        <div key={cardface._id} className='card card-sub' onMouseUp={() => toggleIsHidden(cardface._id)}>
-          {cardface.id !== 'default' && <button type='button' onClick={() => {setIsEditable(prevState => !prevState)}}>Edit</button>}
-          {<h3 className="card-title">{cardface.title}</h3>}
-          <p className="card-body" style={{display: cardface.isHidden ? 'none' : 'block' }}>{cardface.body}</p>
-        </div>
-    )
+export type cardface = {
+  _id: string,
+  title: string,
+  body: string,
+  isHidden: boolean
 }
 
-function CardfaceEditor({ card, cardface, setIsEditable }:any) {
-  const [title, setTitle] = useState<string>(cardface.title)
-  const [body, setBody] = useState<string>(cardface.body)
-  const { dispatch } = useCardsContext()
-
-  async function handleSave() {
-    const updatedCardfaces = [...card.cardfaces.filter((e:cardface) => e._id !== cardface._id), {...cardface, title: title, body: body, isHidden: true}]
-    const updatedCard = { cardfaces: updatedCardfaces }
-
-    const response = await fetch('/api/cards/' + card._id, {
-      method: 'PATCH',
-      body: JSON.stringify(updatedCard),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    const json = await response.json()
-
-    if (response.ok) {
-      dispatch({type: 'UPDATE_CARD', payload: json})
-      setIsEditable(false)
+//Default Card
+export const defaultCard = {
+  _id: 'default',
+  title: "Welcome to Jeremy's Study App",
+  body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente deserunt distinctio in voluptatum dolore quae error magni.",
+  cardfaces: [
+    {
+      _id: '64541c2128aa517105991a21',
+      id: 'default',
+      title: 'Getting Started',
+      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
+      isHidden: false
+    },
+    {
+      _id: '64541c2128aa517105991a22',
+      id: 'default',
+      title: 'What is a SRS?',
+      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
+      isHidden: false
+    },
+    {
+      _id: '64541c2128aa517105991a23',
+      id: 'default',
+      title: 'Click Me!',
+      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
+      isHidden: true
     }
-  }
-    
-  async function handleDelete() {
-    const updatedCard = { cardfaces: [...card.cardfaces.filter((e:cardface) => e._id !== cardface._id)] }
-
-    const response = await fetch('/api/cards/' + card._id, {
-      method: 'PATCH',
-      body: JSON.stringify(updatedCard),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    const json = await response.json()
-
-    if (response.ok) {
-      dispatch({type: 'UPDATE_CARD', payload: json})
-      setIsEditable(false)
-    }
-  }
-
-  return (
-    <div className="card-container">
-      <button type='button' onClick={() => setIsEditable(false)}>Cancel</button>
-      <button type='button' onClick={handleSave}>Save</button>
-      <button type='button' onClick={handleDelete}>Delete</button>
-      <div className="card">
-        <input
-          type="text"
-          className='card-edit-title'
-          name='card-title'
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}>
-        </input>
-        <textarea
-          className='card-edit-body'
-          name='card-body'
-          onChange={(e) => setBody(e.target.value)}
-          value={body}
-        />
-      </div>
-    </div>
-  )
-
+  ],
+  nextReview: 1683079368819,
+  reviewCount: 0,
+  createdAt: "2023-05-03T02:02:48.826+00:00",
+  updatedAt: "2023-05-03T02:02:48.826+00:00",
 }
