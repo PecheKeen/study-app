@@ -42,7 +42,7 @@ export default function App() {
                 : <CardEditor card={card} setCard={setCard} setViewMode={setViewMode} />}
       <div className="sidebar">
         <NewCardForm />
-        <RecommendedCardTiles />
+        <RecommendedCardTiles cards={cards} getCard={getCardById} />
         <CardList getCard={getCardById} />
       </div>
     </div>
