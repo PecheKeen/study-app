@@ -15,7 +15,7 @@ export default function CardfaceViewer({ card, cardface, setCard }: Props) {
   return isEditable ? (<CardfaceEditor card={card} cardface={cardface} setIsEditable={setIsEditable} setCard={setCard} />)
     : (
         <div key={cardface._id} className='card card-sub' onMouseUp={() => setIsHidden(prev => !prev)}>
-          {cardface._id !== 'default' && <button type='button' onClick={() => {setIsEditable(prevState => !prevState)}}>Edit</button>}
+          {card._id !== 'default' && <button type='button' onClick={() => {setIsEditable(prevState => !prevState)}}>Edit</button>}
           {<h3 className="card-title">{cardface.title}</h3>}
           <p className="card-body" style={{display: isHidden ? 'none' : 'block' }}>{cardface.body}</p>
         </div>

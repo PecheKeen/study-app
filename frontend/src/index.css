@@ -150,5 +150,14 @@ textarea {
   margin-left: auto;
   height: 25px;
   width: 10px;
-  background-color: green;
+  background-color: none;
+}
+
+.review-container {
+  width: auto;
+}
+
+.review-button {
+  width: 100px;
+  height: 35px;
 }

@@ -75,24 +75,21 @@ export const defaultCard = {
   cardfaces: [
     {
       _id: '64541c2128aa517105991a21',
-      id: 'default',
       title: 'Getting Started',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
     },
     {
       _id: '64541c2128aa517105991a22',
-      id: 'default',
       title: 'What is a SRS?',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
     },
     {
       _id: '64541c2128aa517105991a23',
-      id: 'default',
       title: 'Click Me!',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
     }
   ],
-  nextReview: 1683079368819,
+  nextReview: 9683079368819,
   reviewCount: 0,
   createdAt: "2023-05-03T02:02:48.826+00:00",
   updatedAt: "2023-05-03T02:02:48.826+00:00",

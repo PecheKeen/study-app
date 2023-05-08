@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import NewFacecardForm from './NewCardfaceForm'
 import CardfaceViewer from './CardfaceViewer'
+import Reviewer from './Reviewer'
 import { Card, Cardface } from '../App'
 
 type Props = {
@@ -11,6 +12,8 @@ type Props = {
 
 export default function CardViewer({ card, setCard, setViewMode }: Props) {
   const [showNewFacecardForm, setShowNewFacecardForm] = useState<boolean>(false)
+
+  const currTime = Date.now()
 
   // Create Cardface Elements
   const cardfaceElements = card.cardfaces.map((cardface: Cardface) => (
@@ -27,6 +30,7 @@ export default function CardViewer({ card, setCard, setViewMode }: Props) {
       </div>
       {showNewFacecardForm && <NewFacecardForm card={card} setCard={setCard} setShowNewFacecardForm={setShowNewFacecardForm} />}
       {cardfaceElements}
+      {currTime > card.nextReview && <Reviewer card={card} setCard={setCard}/>}
     </div>
   )
 }
