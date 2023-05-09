@@ -10,7 +10,7 @@ export default function RecommendedCardTiles({ cards, getCard }: Props) {
   const currTime = Date.now()
 
   // Get most recently added cards that are available for review
-  const readyCards: Card[] = cards.filter((card) => card.nextReview < currTime).reverse()
+  const readyCards: Card[] = cards.filter((card) => card.nextReview < currTime).reverse().slice(0, 6)
 
   const recElements = readyCards.map((card: Card) => (
     <div key={ card._id} className="tile" onClick={() => getCard(card._id)}>
@@ -29,8 +29,6 @@ export default function RecommendedCardTiles({ cards, getCard }: Props) {
     ))
 
   }
-
-  console.log(recElements)
 
   return (
     <div className="tiles">
