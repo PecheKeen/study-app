@@ -9,30 +9,28 @@ const schedule = require('node-schedule')
 const app = express()
 
 // Twilio
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require('twilio')(accountSid, authToken)
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const client = require('twilio')(accountSid, authToken)
 
-const everyDayAtNoon = new schedule.RecurrenceRule()
-everyDayAtNoon.tz = 'America/New_York'
-everyDayAtNoon.hour = 12
-everyDayAtNoon.minute = 0
+// const everyDayAtNoon = new schedule.RecurrenceRule()
+// everyDayAtNoon.tz = 'America/New_York'
+// everyDayAtNoon.hour = 12
+// everyDayAtNoon.minute = 0
 
-const sendMessage = schedule.scheduleJob(everyDayAtNoon, () => {
-  message('You have reviews waiting for you in your study app', '+18335013802', '+12404096467')
-})
+// const sendMessage = schedule.scheduleJob(everyDayAtNoon, () => {
+//   message('You have reviews waiting for you in your study app', '+18335013802', '')
+// })
 
-// from: '+18335013802',
-
-function message(message, from, to) {
-  client.messages
-    .create({
-      body: message,
-      from: `${from}`,
-      to: `${to}`
-    })
-    .then(message => console.log(message.sid));
-}
+// function message(message, from, to) {
+//   client.messages
+//     .create({
+//       body: message,
+//       from: `${from}`,
+//       to: `${to}`
+//     })
+//     .then(message => console.log(message.sid));
+// }
 
 // Middleware
 app.use(express.json())
