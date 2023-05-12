@@ -2,27 +2,60 @@
   margin: 0;
 }
 
-html {
-  height: 100%;
-}
-
 body {
-  background-color: #eee;
-  color: #222;
+  background-color: #333;
+  color: white;
   display: flex;
   min-height: 100%;
-  align-items: center;
   justify-content: center;
+  line-height: 1.5rem;
 }
 
 textarea {
-  resize: vertical;
+  resize: none;
 }
+
+hr {
+  background-color: white;
+  height: 1px;
+}
+
+button {
+  max-width: 50px;
+}
+
 
 .main {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
-  margin-top: 5vh;
+}
+
+.new-btn {
+  grid-area: new-btn;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  outline: none;
+  border: none;
+  background-color: green;
+  color: white;
+  font-size: 1rem;
+}
+
+/* ADD CARD/SUBCARD FORM */
+dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(135, 105, 105, 0);
+  border: none;
+  color:#e7e7e7
+}
+
+dialog::backdrop {
+  background: hsla(0, 0%, 0%, 0.764);
 }
 
 .card-editor-container {
@@ -48,73 +81,95 @@ textarea {
   height: 25px;
 }
 
+
+/* CARD VIEWER */
 .card-container {
-  width: 600px;
-  height: 100%;
+  width: 50vw;
+  min-width: 400px;
+  padding-top: 4rem;
   align-items: center;
-  overflow: scroll;
+  background-color: #222;
+  color:#e7e7e7;
+  flex-grow: 1;
+} 
+
+.card-left-bar {
+  grid-area: left-bar;
 }
 
-.card {
-  background-color: #ddd;
-  display: flex;
-  flex-direction: column;
+.card-right-bar {
+  grid-area: right-bar;
 }
-
-.card-sub {
-  margin-top: 1rem;
-}
-
 .card-title {
-  margin: 2rem 0 0 6rem;
+  grid-area: title;
 }
 
 .card-body {
-  margin: 1rem 7rem;
-}
-
-.cardface {
-  background-color: #eee;
-  margin: 1rem 5rem 1rem 6rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.cardface-subtitle {
-  margin: 2rem 3rem 1rem;
-  text-align: center;
-}
-
-.cardface-body {
-  margin: 0 3rem;
+overflow: hidden;  grid-area: body;
 }
 
 .line {
-  width: 150px;
-  height: 1px;
-  background-color: #222;
-  margin: 1.5rem 0 1.5rem 33%;
+  grid-area: line;
+  margin-bottom: 1rem;
 }
 
+.card {
+  display: grid;
+  grid-template-columns: 1fr 3fr 9fr 1fr;
+  grid-template-rows: auto;
+  column-gap: 2rem;
+  row-gap: 1rem;
+}
+
+.card-main {
+  grid-template-areas:
+    ". new-btn . ."
+    "left-bar title title right-bar"
+    "left-bar body body right-bar"
+    "left-bar line line right-bar";  
+} 
+
+.cardface-main {
+  grid-template-areas:
+    "left-bar title body right-bar"
+    "left-bar line line right-bar";
+} 
+
+.review-container {
+  display: flex;
+  width: auto;
+  justify-content: center;
+  gap: 1rem;
+
+}
+
+.review-button {
+  min-width: 100px;
+  height: 30px;
+}
+
+/* SIDEBAR */
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  padding-top: 4rem;
   width: 350px;
+  gap: 1rem;
 }
 
+/* RECOMMENDED REVIEWS */
 .tile-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
+  grid-gap: 7px;
 }
 
 .tile {
-  background-color: #ddd;
+  background-color: #222;
+  border-radius: 5px;
   display: flex;
-}
-
-.tile-rank {
-  width: .5rem;
-  min-height: 4rem;
-  margin-left: auto;
+  height: 60px;
+  overflow: hidden;
 }
 
 .tile-title {
@@ -122,23 +177,19 @@ textarea {
   font-size: 1rem;
 }
 
-.list-container {
-  margin-top: 1rem;
-}
-
+/* CARD BROWSER */
 .list {
   display: flex;
   flex-direction: column;
   gap: 3px;
-  background-color: #ddd;
   height: 400px;
   overflow: scroll;
 }
 
 .list-item {
   display: flex;
-  background-color: #ccc;
   align-items: center;
+  overflow: hidden ;
 }
 
 .list-item-title {
@@ -147,17 +198,8 @@ textarea {
 }
 
 .list-item-status {
-  margin-left: auto;
-  height: 25px;
-  width: 10px;
+  height: .75rem;
+  width: .75rem;
   background-color: none;
-}
-
-.review-container {
-  width: auto;
-}
-
-.review-button {
-  width: 100px;
-  height: 35px;
+  border-radius: 25%;
 }

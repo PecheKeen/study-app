@@ -11,13 +11,17 @@ type Props = {
 export default function CardfaceViewer({ card, cardface, setCard }: Props) {
   const [isEditable, setIsEditable] = useState<boolean>(false)
   const [isHidden, setIsHidden] = useState<boolean>(true)
+  const [isFocus, setIsFocus] = useState<boolean>(false)
   
-  return isEditable ? (<CardfaceEditor card={card} cardface={cardface} setIsEditable={setIsEditable} setCard={setCard} />)
-    : (
-        <div key={cardface._id} className='card card-sub' onMouseUp={() => setIsHidden(prev => !prev)}>
-          {card._id !== 'default' && <button type='button' onClick={() => {setIsEditable(prevState => !prevState)}}>Edit</button>}
-          {<h3 className="card-title">{cardface.title}</h3>}
-          <p className="card-body" style={{display: isHidden ? 'none' : 'block' }}>{cardface.body}</p>
-        </div>
-    )
+  return (
+    <div key={cardface._id} className='card cardface-main' onMouseEnter={() => setIsFocus(true)} onMouseLeave={() => setIsFocus(false)}>
+      <div className="card-left-bar">
+        {isFocus && (card._id !== 'default' && <CardfaceEditor card={card} cardface={cardface} setCard={setCard}/>)}
+      </div>
+        <h3 className="card-title">{cardface.title}</h3>
+        <p className="card-body" style={{ display: isHidden ? 'none' : 'block' }}>{cardface.body}</p>
+      <div className="card-right-bar" onClick={() => setIsHidden(prev => !prev)}>{ isHidden ? "v" : "^"}</div>
+      <div className="line"><hr /></div>
+    </div>
+  )
 }

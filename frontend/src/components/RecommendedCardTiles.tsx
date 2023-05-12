@@ -24,7 +24,6 @@ export default function RecommendedCardTiles({ cards, getCard }: Props) {
     recElements.push((
       <div key={nanoid()} className="tile">
         <h4 className="tile-title"></h4>
-        <div className="tile-rank"></div>
       </div>
     ))
 

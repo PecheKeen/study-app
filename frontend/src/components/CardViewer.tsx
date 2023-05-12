@@ -3,6 +3,7 @@ import NewFacecardForm from './NewCardfaceForm'
 import CardfaceViewer from './CardfaceViewer'
 import Reviewer from './Reviewer'
 import { Card, Cardface } from '../App'
+import CardEditor from './CardEditor'
 
 type Props = {
   card: Card
@@ -11,9 +12,9 @@ type Props = {
 }
 
 export default function CardViewer({ card, setCard, setViewMode }: Props) {
+  const [isFocus, setIsFocus] = useState<boolean>(false)
+  
   const currTime = Date.now()
-
-  const [showNewFacecardForm, setShowNewFacecardForm] = useState<boolean>(false)
 
   // Create Cardface Elements
   const cardfaceElements = card.cardfaces.map((cardface: Cardface) => (
@@ -22,14 +23,19 @@ export default function CardViewer({ card, setCard, setViewMode }: Props) {
 
   return (
     <div className="card-container">
-      {card._id !== 'default' && <button type='button' onClick={() => setViewMode(false)}>Edit</button>}
-      {card._id !== 'default' && <button type='button' onClick={() => {setShowNewFacecardForm(true)}}>+</button>}
-      <div className="card"  >
+      <div className="card card-main" onMouseEnter={() => setIsFocus(true)} onMouseLeave={() => setIsFocus(false)}>
+        <div className='card-left-bar'>
+          {isFocus && (card._id !== 'default' && <CardEditor card={card} setCard={setCard}/>)}
+        </div>
         <h2 className="card-title">{card.title}</h2>
         <p className="card-body">{card.body}</p>
+        <div className="card-right-bar"></div>
+        <div className="line"><hr /></div>
       </div>
-      {showNewFacecardForm && <NewFacecardForm card={card} setCard={setCard} setShowNewFacecardForm={setShowNewFacecardForm} />}
       {cardfaceElements}
+      <div className="card card-main">
+        <NewFacecardForm card={card} setCard={setCard} />
+      </div>
       {currTime > card.nextReview && <Reviewer card={card} setCard={setCard} />}
     </div>
   )

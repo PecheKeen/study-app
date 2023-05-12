@@ -7,16 +7,16 @@ export default function NewCardForm() {
   const [body, setBody] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
 
-  const modalRef = useRef<HTMLDialogElement>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
   
-  // Open Modal
-  function openModal() {
-    if(modalRef.current) modalRef.current.showModal()
+  // Open Dialog
+  function openDialog() {
+    if(dialogRef.current) dialogRef.current.showModal()
   }
 
-  // Close Modal
-  function closeModal() {
-    if(modalRef.current) modalRef.current.close()
+  // Close Dialog
+  function closeDialog() {
+    if(dialogRef.current) dialogRef.current.close()
   }
 
   // Create New Card on DB
@@ -54,18 +54,18 @@ export default function NewCardForm() {
     
   return (
     <>
-      <button onClick={openModal}>+</button>
-      <dialog className="card-editor-container" ref={modalRef}>
+      <button className="new-btn" onClick={openDialog}>+</button>
+      <dialog className="card-editor-container" ref={dialogRef}>
         <form method='dialog' className='card-editor-form' onSubmit={handleSubmit}>
-          <label>Title: </label>
+          <h3>Add New Card</h3>
           <input
             type="text"
             id='card-title'
             name='card-title'
             onChange={(e) => setTitle(e.target.value)}
+            placeholder='Title'
             value={title}
           />
-          <label>Body: </label>
           <textarea
             id='card-body'
             name='card-body'
@@ -73,8 +73,8 @@ export default function NewCardForm() {
             value={body}
           />
           <div>
-            <button formMethod='dialog' type='submit' onClick={closeModal}>Add Card</button>
-            <button type='button' onClick={closeModal}>Cancel</button>
+            <button formMethod='dialog' type='submit' onClick={closeDialog}>Add Card</button>
+            <button type='button' onClick={closeDialog}>Cancel</button>
           </div>
         </form>
       </dialog>

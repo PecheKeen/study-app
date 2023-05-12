@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useCardsContext } from '../hooks/useCardsContext'
 import { defaultCard } from '../App'
 import { Card } from '../App'
@@ -6,14 +6,25 @@ import { Card } from '../App'
 type Props = {
   card: Card
   setCard: React.Dispatch<React.SetStateAction<Card>>,
-  setViewMode: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // Card Editor
-export default function CardEditor({ card, setCard, setViewMode }:Props) {
+export default function CardEditor({ card, setCard, }:Props) {
   const [title, setTitle] = useState(card.title)
   const [body, setBody] = useState(card.body)
   const { dispatch } = useCardsContext()
+
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+    // Open Dialog
+  function openDialog() {
+    if(dialogRef.current) dialogRef.current.showModal()
+  }
+
+  // Close Dialog
+  function closeDialog() {
+    if(dialogRef.current) dialogRef.current.close()
+  }
 
   // Save Card to DB
   async function handleSave() {
@@ -31,7 +42,7 @@ export default function CardEditor({ card, setCard, setViewMode }:Props) {
     if (response.ok) {
       dispatch({ type: 'UPDATE_CARD', payload: json })
       setCard(json)
-      setViewMode(true)
+      closeDialog()
     }
   }
   
@@ -46,30 +57,37 @@ export default function CardEditor({ card, setCard, setViewMode }:Props) {
     if (response.ok) {
       dispatch({ type: 'DELETE_CARD', payload: json })
       setCard(defaultCard)
-      setViewMode(true)
+      closeDialog()
     }
   }
 
   return (
-    <div className="card-container">
-      <button type='button' onClick={() => setViewMode(true)}>Cancel</button>
-      <button type='button' onClick={handleSave}>Save</button>
-      <button type='button' onClick={handleDelete}>Delete</button>
-      <div className="card">
-        <input
-          type="text"
-          className='card-edit-title'
-          name='card-title'
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}>
-        </input>
-        <textarea
-          className='card-edit-body'
-          name='card-body'
-          onChange={(e) => setBody(e.target.value)}
-          value={body}
-        />
-      </div>
-    </div>
+    <>
+      <button onClick={openDialog}>Edit</button>
+      <dialog className="card-editor-container" ref={dialogRef}>
+        <form method='dialog' className='card-editor-form' >
+          <h3>Edit Card</h3>
+          <input
+            type="text"
+            id='card-title'
+            name='card-title'
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder='Title'
+            value={title}
+          />
+          <textarea
+            id='card-body'
+            name='card-body'
+            onChange={(e) => setBody(e.target.value)}
+            value={body}
+          />
+          <div>
+            <button type='button' onClick={closeDialog}>Cancel</button>
+            <button formMethod='dialog' type='submit' onClick={handleSave}>Done</button>
+            <button type='button' onClick={handleDelete}>Delete</button>
+          </div>
+        </form>
+      </dialog>
+    </>
   )
 }

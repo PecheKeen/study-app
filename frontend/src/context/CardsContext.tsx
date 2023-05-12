@@ -1,5 +1,5 @@
 import { ReducerAction, createContext, useReducer } from "react"
-import { tCard } from "../App"
+import { Card } from "../App"
 
 export const CardsContext = createContext<any>({} as any)
 
@@ -15,11 +15,11 @@ export function cardsReducer(state:any, action:any ) {
       }
     case 'DELETE_CARD':
       return {
-        cards: state.cards.filter((card: tCard) => card._id !== action.payload._id)
+        cards: state.cards.filter((card: Card) => card._id !== action.payload._id)
       }
     case 'UPDATE_CARD':
       return {
-        cards: [...state.cards.filter((card: tCard) => card._id !== action.payload._id), action.payload]
+        cards: [...state.cards.filter((card: Card) => card._id !== action.payload._id), action.payload]
       }
     default:
       return state
