@@ -38,8 +38,7 @@ export default function App() {
 
   return (
     <div className="main">
-      {viewMode ? <CardViewer card={card} setCard={setCard} setViewMode={setViewMode} />
-                : <CardEditor card={card} setCard={setCard} setViewMode={setViewMode} />}
+      <CardViewer card={card} setCard={setCard} setViewMode={setViewMode} />
       <div className="sidebar">
         <NewCardForm />
         <RecommendedCardTiles cards={cards} getCard={getCardById} />
