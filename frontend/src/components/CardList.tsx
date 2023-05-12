@@ -9,7 +9,6 @@ export default function CardList({ getCard }: Props) {
   const { cards } = useCardsContext()
   const currTime = Date.now()
 
-  
   const sortedCards = cards.sort((a:Card, b:Card) => a.nextReview - b.nextReview)
 
   // Map Card Names & Status to List Elements

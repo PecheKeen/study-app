@@ -19,7 +19,7 @@ const app = express()
 // everyDayAtNoon.minute = 0
 
 // const sendMessage = schedule.scheduleJob(everyDayAtNoon, () => {
-//   message('You have reviews waiting for you in your study app', '+18335013802', '')
+//   message('You have reviews waiting for you in your study app', '+18335013802', '') // <--- Put your phone# in the last field to test, use the +1xxxxxxxxxx format
 // })
 
 // function message(message, from, to) {
