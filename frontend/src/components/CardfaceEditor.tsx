@@ -74,7 +74,7 @@ export default function CardfaceEditor({ card, cardface, setCard }: Props) {
 
   return (
     <>
-      <button onClick={openDialog}>Edit</button>
+      <button onClick={openDialog}><i className='fa-solid fa-pen-to-square fa-lg' style={{color: "#ffffff"}}></i></button>
       <dialog className="card-editor-container" ref={dialogRef}>
         <form method='dialog' className='card-editor-form' >
           <h3>Edit Card Field</h3>
@@ -92,10 +92,10 @@ export default function CardfaceEditor({ card, cardface, setCard }: Props) {
             onChange={(e) => setBody(e.target.value)}
             value={body}
           />
-          <div>
-            <button type='button' onClick={closeDialog}>Cancel</button>
-            <button formMethod='dialog' type='submit' onClick={handleSave}>Done</button>
-            <button type='button' onClick={handleDelete}>Delete</button>
+          <div className="edit-dialog-icons">
+            <button className='trashicon' type='button' onClick={handleDelete}><i className='fa-solid fa-trash-can fa-lg' style={{color: "#ffffff"}}></i></button>
+            <button className='xicon' type='button' onClick={closeDialog}><i className='fa-solid fa-x fa-lg' style={{ color: "#ffffff" }}></i></button>
+            <button className='checkicon' formMethod='dialog' type='submit' onClick={handleSave}><i className='fa-solid fa-check fa-lg' style={{ color: "#ffffff" }}></i></button>
           </div>
         </form>
       </dialog>

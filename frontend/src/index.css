@@ -21,9 +21,14 @@ hr {
 }
 
 button {
-  max-width: 50px;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
-
 
 .main {
   display: flex;
@@ -45,6 +50,7 @@ button {
 
 /* ADD CARD/SUBCARD FORM */
 dialog {
+  min-width: 40vw;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -95,6 +101,9 @@ dialog::backdrop {
 
 .card-left-bar {
   grid-area: left-bar;
+  display: flex;
+  flex-direction: column;
+  justify-content:right;
 }
 
 .card-right-bar {
@@ -202,4 +211,37 @@ overflow: hidden;  grid-area: body;
   width: .75rem;
   background-color: none;
   border-radius: 25%;
+}
+
+/* ICONS */
+i {
+  display: flex;
+}
+
+.new-dialog-icons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.edit-dialog-icons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.trashicon {
+  grid-column: 1;
+  width: 25px;
+  justify-self: center;
+}
+
+.xicon {
+  grid-column: 4;
+  width: 25px;
+  justify-self: center;
+}
+
+.checkicon {
+  grid-column: 5;
+  width: 25px;
+  justify-self: center;
 }

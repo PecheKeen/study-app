@@ -72,9 +72,9 @@ export default function NewCardForm() {
             onChange={(e) => setBody(e.target.value)}
             value={body}
           />
-          <div>
-            <button formMethod='dialog' type='submit' onClick={closeDialog}>Add Card</button>
-            <button type='button' onClick={closeDialog}>Cancel</button>
+          <div className="new-dialog-icons">
+            <button className="xicon" type='button' onClick={closeDialog}><i className='fa-solid fa-x fa-lg' style={{color: "#ffffff"}}></i></button>
+            <button className='checkicon' formMethod='dialog' type='submit' onClick={closeDialog}><i className='fa-solid fa-check fa-lg' style={{color: "#ffffff"}}></i></button>
           </div>
         </form>
       </dialog>
