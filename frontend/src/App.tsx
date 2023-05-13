@@ -84,7 +84,7 @@ export const defaultCard = {
     },
     {
       _id: '64541c2128aa517105991a23',
-      title: 'Click Me!',
+      title: 'Rate your review',
       body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum blanditiis sapiente asperiores porro ducimus molestiae.",
     }
   ],

@@ -21,7 +21,9 @@ export default function NewFacecardForm({ card, setCard }: Props) {
 
   // Close Dialog
   function closeDialog() {
-    if(dialogRef.current) dialogRef.current.close()
+    if (dialogRef.current) dialogRef.current.close()
+    setTitle("")
+    setBody("")
   }
 
   // Create New Cardface on DB
@@ -41,11 +43,13 @@ export default function NewFacecardForm({ card, setCard }: Props) {
     if (response.ok) {
       dispatch({ type: 'UPDATE_CARD', payload: json })
       closeDialog()
+      setTitle("")
+      setBody("")
       setCard(json)
     }
   }
   return <>
-      <button className="new-btn" onClick={openDialog}>+</button>
+      {card._id !== 'default' && <button className="new-btn" onClick={openDialog}>+</button>}
       <dialog className="card-editor-container" ref={dialogRef}>
         <form method='dialog' className='card-editor-form' onSubmit={handleSave}>
           <h3>Add New Card Field</h3>

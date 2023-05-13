@@ -144,17 +144,31 @@ overflow: hidden;  grid-area: body;
     "left-bar line line right-bar";
 } 
 
+/* REVIEW RATER */
 .review-container {
   display: flex;
   width: auto;
   justify-content: center;
   gap: 1rem;
-
 }
 
 .review-button {
-  min-width: 100px;
-  height: 30px;
+  width: 100px;
+  height: 40px;
+  background-color: #444;
+  border-radius: 3px;
+}
+
+.good:hover {
+  background-color: #2d3e2a;
+}
+
+.mid:hover {
+  background-color: #3b3e2a;
+}
+
+.hard:hover {
+  background-color: #3e2f2a;
 }
 
 /* SIDEBAR */

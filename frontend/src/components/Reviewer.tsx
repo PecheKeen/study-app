@@ -58,9 +58,9 @@ export default function Reviewer({ card, setCard }: Props) {
 
   return (
     <div className="review-container">
-      {card.reviewCount > 0 && <button type="button" className="review-button" onClick={() => handleReview(-1)}>hard</button>}
-      <button type="button" className="review-button" onClick={() => handleReview(0)}>mid</button>
-      <button type="button" className="review-button" onClick={() => handleReview(1)}>good</button>
+      {card.reviewCount > 0 && <button type="button" className="review-button hard" onClick={() => handleReview(-1)}>hard</button>}
+      <button type="button" className="review-button mid" onClick={() => handleReview(0)}>mid</button>
+      <button type="button" className="review-button good" onClick={() => handleReview(1)}>good</button>
     </div>
   )
 }
