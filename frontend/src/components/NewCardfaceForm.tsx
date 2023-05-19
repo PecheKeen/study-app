@@ -51,7 +51,7 @@ export default function NewFacecardForm({ card, setCard }: Props) {
   return <>
       {card._id !== 'default' && <button className="new-btn" onClick={openDialog}>+</button>}
       <dialog className="card-editor-container" ref={dialogRef}>
-        <form method='dialog' className='card-editor-form' onSubmit={handleSave}>
+        <form method='dialog' className='card-editor-form'>
           <h3>Add New Card Field</h3>
           <input
             type="text"
@@ -69,7 +69,7 @@ export default function NewFacecardForm({ card, setCard }: Props) {
           />
           <div className="new-dialog-icons">
             <button className="xicon" type='button' onClick={closeDialog}><i className='fa-solid fa-x fa-lg' style={{color: "#ffffff"}}></i></button>
-            <button className="checkicon" formMethod='dialog' type='submit' onClick={closeDialog}><i className='fa-solid fa-check fa-lg' style={{color: "#ffffff"}}></i></button>
+            <button className="checkicon" formMethod='dialog' type='submit' onClick={handleSave}><i className='fa-solid fa-check fa-lg' style={{color: "#ffffff"}}></i></button>
           </div>
         </form>
       </dialog>
